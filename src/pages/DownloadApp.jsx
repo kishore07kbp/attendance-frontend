@@ -10,16 +10,7 @@ const DownloadApp = () => {
             <div className="download-card">
                 <div className="app-icon-wrapper">
                     <div className="app-icon-circle">
-                         <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 2L3 7V12C3 16.55 6.36 20.74 12 22C17.64 20.74 21 16.55 21 12V7L12 2Z" fill="url(#grad1)"/>
-                            <path d="M12 17V11M12 11L15 14M12 11L9 14" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                            <defs>
-                                <linearGradient id="grad1" x1="3" y1="2" x2="21" y2="22" gradientUnits="userSpaceOnUse">
-                                    <stop stopColor="#6366f1" />
-                                    <stop offset="1" stopColor="#a855f7" />
-                                </linearGradient>
-                            </defs>
-                        </svg>
+                         <img src="/logo.png" alt="Bunk Tracer Logo" style={{ width: '60px', height: '60px', objectFit: 'contain' }} />
                     </div>
                 </div>
 
