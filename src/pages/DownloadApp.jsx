@@ -11,7 +11,7 @@ const DownloadApp = () => {
             <div className="download-card">
                 <div className="app-icon-wrapper">
                     <div className="app-icon-circle">
-                        <img src={AppLogo} alt="Bunk Tracer Logo" style={{ width: '60px', height: '60px', objectFit: 'contain' }} />
+                        <img src={AppLogo} alt="Bunk Tracer Logo" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%' }} />
                     </div>
                 </div>
 
