@@ -308,7 +308,7 @@ const Profile = ({ student, onUpdate }) => {
                 gap: '0.75rem'
               }}>
                 <img 
-                  src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(window.location.origin + "/download")}`} 
+                  src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent("https://github.com/S-THAMARAI-SELVAN/Smart-Attendance-App/releases/download/v1.0/app-release.apk")}`} 
                   alt="Bunk Tracer Download" 
                   style={{ width: '160px', height: '160px', display: 'block' }}
                 />

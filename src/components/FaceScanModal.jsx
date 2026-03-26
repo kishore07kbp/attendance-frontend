@@ -173,37 +173,31 @@ const FaceScanModal = ({ isOpen, onClose, onFaceVerified, course, isRegistration
         try {
             // Using balanced settings for TinyFaceDetector
             const detection = await faceapi
-                .detectSingleFace(videoRef.current, new faceapi.TinyFaceDetectorOptions({ 
-                    inputSize: 320, 
-                    scoreThreshold: 0.5 
+                .detectSingleFace(videoRef.current, new faceapi.TinyFaceDetectorOptions({
+                    inputSize: 320,
+                    scoreThreshold: 0.5
                 }))
                 .withFaceLandmarks()
                 .withFaceDescriptor();
 
             if (detection) {
                 const descriptor = Array.from(detection.descriptor);
-                
+
                 // Compare with registered face descriptor if not registering
                 if (!isRegistration && registeredDescriptor && Array.isArray(registeredDescriptor) && registeredDescriptor.length > 0) {
                     const currentDescriptor = new Float32Array(descriptor);
                     const savedDescriptor = new Float32Array(registeredDescriptor);
-                    
-                    // Faceapi.euclideanDistance is very reliable for identification
+
                     const distance = faceapi.euclideanDistance(currentDescriptor, savedDescriptor);
-                    
-                    // Calculate a simple match score (inverted distance)
-                    const matchScore = Math.max(0, 1 - distance); 
-                    
-                    console.log(`Face identification check - Distance: ${distance.toFixed(4)}, Match Score: ${matchScore.toFixed(4)}`);
-                    
-                    // Threshold for Euclidean Distance is typically 0.6 (where < 0.6 is a match)
-                    // We'll use 0.55 for higher accuracy (0.6 is standard but 0.55 is safer for high security)
-                    if (distance > 0.55) {
-                        toast.error(`face is not match with register`, {
+                    console.log(`[FaceScan] Verification Distance: ${distance.toFixed(4)} (Threshold: 0.45)`);
+
+                    // Fail if distance is above threshold (lower distance = closer match)
+                    if (distance > 0.45) {
+                        toast.error(`Face mismatch! This face does not match your registered profile (Distance: ${distance.toFixed(2)})`, {
                             position: "top-right",
                             autoClose: 5000
                         });
-                        return; 
+                        return; // CRITICAL: Stop here, don't move to Step 3
                     }
                 }
 
@@ -225,7 +219,7 @@ const FaceScanModal = ({ isOpen, onClose, onFaceVerified, course, isRegistration
                     onFaceVerified(descriptor);
                 }
             } else {
-                 toast.error('No face detected. Please try again.');
+                toast.error('No face detected. Please try again.');
             }
         } catch (error) {
             console.error('CRITICAL: Face detection failed:', error);
@@ -278,6 +272,7 @@ const FaceScanModal = ({ isOpen, onClose, onFaceVerified, course, isRegistration
                             {cameraHint}
                         </div>
                     )}
+
 
                     {isLoadingModels ? (
                         <div className="face-scan-loading">

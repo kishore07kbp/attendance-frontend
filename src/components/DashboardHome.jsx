@@ -81,6 +81,7 @@ const DashboardHome = () => {
   };
 
   const handleFaceVerified = async (descriptor) => {
+    console.log("[Dashboard] Face verified successfully, preparing for Step 3.");
     setFaceDescriptor(descriptor);
     setFaceScanModalOpen(false);
 
@@ -104,8 +105,10 @@ const DashboardHome = () => {
       return;
     }
 
-    // Proceed to Step 3: Verification
-    setBleVerificationModalOpen(true);
+    // Proceed to Step 3: Verification with a slight delay to ensure UI stability
+    setTimeout(() => {
+        setBleVerificationModalOpen(true);
+    }, 400);
   };
 
   // Step 3: BLE verification complete handler

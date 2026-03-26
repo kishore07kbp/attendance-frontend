@@ -185,7 +185,7 @@
     #0043ff 330deg,
     transparent 360deg
   );
-  animation: rotateBorder 4s linear infinite;
+  /* Removed animation: rotateBorder 4s linear infinite; as per user request to stop continuous movement */
   z-index: 0;
 }
 
@@ -245,10 +245,12 @@
   width: fit-content;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   border: 1px solid #334155;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  animation: pulse 2s infinite;
+  min-height: 40px; /* Prevent height flickering */
+  /* Animation removed to fulfill "not move" requirement */
 }
 
 @keyframes pulse {

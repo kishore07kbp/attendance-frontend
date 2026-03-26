@@ -9,6 +9,7 @@ const DailyAttendance = () => {
   const [loading, setLoading] = useState(true);
   const [filterYear, setFilterYear] = useState('All');
   const [filterClass, setFilterClass] = useState('All');
+  const [filterCourse, setFilterCourse] = useState('All');
 
   useEffect(() => {
     fetchAttendance();
@@ -26,14 +27,16 @@ const DailyAttendance = () => {
     }
   };
 
-  // Derive unique classes from the current attendance data for the filter
+  // Derive unique classes/courses from the current attendance data for the filter
   const uniqueClasses = [...new Set(attendance.map(record => record.studentId?.studentClass).filter(Boolean))].sort();
+  const uniqueCourses = [...new Set(attendance.map(record => record.course).filter(Boolean))].sort();
 
   // Apply filters
   const filteredAttendance = attendance.filter(record => {
     const matchesYear = filterYear === 'All' || record.studentId?.year === filterYear;
     const matchesClass = filterClass === 'All' || record.studentId?.studentClass === filterClass;
-    return matchesYear && matchesClass;
+    const matchesCourse = filterCourse === 'All' || record.course === filterCourse;
+    return matchesYear && matchesClass && matchesCourse;
   });
 
   if (loading) {
@@ -80,6 +83,20 @@ const DailyAttendance = () => {
             <option value="All">All Classes</option>
             {uniqueClasses.map(cls => (
               <option key={cls} value={cls}>{cls}</option>
+            ))}
+          </select>
+        </div>
+
+        <div>
+          <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#6b7280', marginBottom: '0.25rem' }}>Course</label>
+          <select 
+            value={filterCourse}
+            onChange={(e) => setFilterCourse(e.target.value)}
+            style={{ padding: '0.5rem', border: '1px solid #d1d5db', borderRadius: '0.5rem', outline: 'none', background: 'white', minWidth: '120px' }}
+          >
+            <option value="All">All Courses</option>
+            {uniqueCourses.map(course => (
+              <option key={course} value={course}>{course}</option>
             ))}
           </select>
         </div>
