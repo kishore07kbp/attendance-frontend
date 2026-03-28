@@ -293,7 +293,7 @@ const Profile = ({ student, onUpdate }) => {
                 </div>
                 <h2 className="profile-card-title" style={{ margin: 0, color: 'white', letterSpacing: '0.025em' }}>Bunk Tracer App</h2>
               </div>
-              <span style={{ fontSize: '0.7rem', padding: '0.2rem 0.6rem', background: 'rgba(255, 255, 255, 0.1)', color: 'rgba(255, 255, 255, 0.8)', borderRadius: '1rem', border: '1px solid rgba(255, 255, 255, 0.1)' }}>v1.0.2</span>
+                <div style={{ background: 'rgba(255, 255, 255, 0.1)', color: 'rgba(255, 255, 255, 0.8)', borderRadius: '1rem', border: '1px solid rgba(255, 255, 255, 0.1)', padding: '0.2rem 0.6rem', fontSize: '0.7rem' }}>v1.0.0</div>
             </div>
             
             <div style={{ display: 'flex', gap: '2rem', alignItems: 'center', flexWrap: 'wrap' }}>
@@ -308,7 +308,7 @@ const Profile = ({ student, onUpdate }) => {
                 gap: '0.75rem'
               }}>
                 <img 
-                  src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent("https://github.com/S-THAMARAI-SELVAN/Smart-Attendance-App/releases/download/v1.0/app-release.apk")}`} 
+                  src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(window.location.origin + "/download")}`} 
                   alt="Bunk Tracer Download" 
                   style={{ width: '160px', height: '160px', display: 'block' }}
                 />
