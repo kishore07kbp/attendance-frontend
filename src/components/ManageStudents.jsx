@@ -109,7 +109,7 @@ const ManageStudents = () => {
 
         <input
           type="text"
-          placeholder="Search by roll number or department..."
+          placeholder="Search by Name or Roll Number..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           style={{
