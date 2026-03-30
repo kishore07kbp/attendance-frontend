@@ -3,7 +3,7 @@ import AppLogo from '../assets/logo.jpeg';
 import './DownloadApp.css';
 
 const DownloadApp = () => {
-    const apkUrl = "https://github.com/S-THAMARAI-SELVAN/Smart-Attendance-App/releases/download/v1.0.0/app-release.apk";
+    const apkUrl = "https://github.com/kishore07kbp/bunk-tracer/releases/download/v1.0/BunkTracer.apk";
 
     return (
         <div className="download-container">
