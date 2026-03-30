@@ -3,7 +3,7 @@ import AppLogo from '../assets/logo.jpeg';
 import './DownloadApp.css';
 
 const DownloadApp = () => {
-    const apkUrl = "https://github.com/kishore07kbp/bunk-tracer/releases/download/v1.0/BunkTracer.apk";
+    const apkUrl = "https://github.com/kishore07kbp/bunk-tracer/releases/download/v1.1/BunkTracer-v1.1.apk";
 
     return (
         <div className="download-container">
