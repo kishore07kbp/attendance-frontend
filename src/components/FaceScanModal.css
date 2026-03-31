@@ -185,7 +185,8 @@
     #0043ff 330deg,
     transparent 360deg
   );
-  /* Removed animation: rotateBorder 4s linear infinite; as per user request to stop continuous movement */
+  /* Restored animation as requested: moves the blue border around the frame */
+  animation: rotateBorder 4s linear infinite;
   z-index: 0;
 }
 
