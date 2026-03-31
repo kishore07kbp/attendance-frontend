@@ -295,6 +295,9 @@ const BleVerificationModal = ({ isOpen, onClose, onComplete, student }) => {
                                                     <div style={{ fontSize: '13px', color: isMatch ? '#166534' : '#475569', fontWeight: '600' }}>
                                                         {device.rssi} dBm
                                                     </div>
+                                                    <div style={{ fontSize: '11px', color: '#94a3b8', marginTop: '4px' }}>
+                                                        Last seen: {new Date(device.lastSeen).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
+                                                    </div>
                                                 </div>
                                             </div>
                                         )
