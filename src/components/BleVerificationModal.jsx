@@ -285,18 +285,19 @@ const BleVerificationModal = ({ isOpen, onClose, onComplete, student }) => {
                                                 </div>
                                                 <div style={{ textAlign: 'right' }}>
                                                     <div style={{ 
-                                                        fontSize: '11px', 
+                                                        fontSize: '11.5px', 
                                                         fontWeight: '800', 
                                                         color: isMatch ? '#22c55e' : '#94a3b8',
-                                                        textTransform: 'uppercase'
+                                                        textTransform: 'uppercase',
+                                                        marginBottom: '2px'
                                                     }}>
-                                                        {isMatch ? 'Match Found' : 'Nearby'}
+                                                        {isMatch ? 'MATCH FOUND' : 'NEARBY'}
                                                     </div>
-                                                    <div style={{ fontSize: '13px', color: isMatch ? '#166534' : '#475569', fontWeight: '600' }}>
+                                                    <div style={{ fontSize: '13px', color: isMatch ? '#166534' : '#475569', fontWeight: '700' }}>
                                                         {device.rssi} dBm
                                                     </div>
-                                                    <div style={{ fontSize: '11px', color: '#94a3b8', marginTop: '4px' }}>
-                                                        Last seen: {new Date(device.lastSeen).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
+                                                    <div style={{ fontSize: '11px', color: '#9ca3af', marginTop: '4px' }}>
+                                                        Last seen: {device.lastSeen ? new Date(device.lastSeen).toLocaleTimeString() : 'Just now'}
                                                     </div>
                                                 </div>
                                             </div>
