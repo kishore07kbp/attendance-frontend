@@ -78,7 +78,7 @@ const AttendanceVerificationModal = ({ isOpen, onClose, onNext }) => {
               title: title,
               isActive: isActive,
               hasCourse: true,
-              displayStr: `${slot.id} - ${title} (${slot.time})`
+              displayStr: `${slot.id} - ${title}`
             });
           });
 
