@@ -2,111 +2,122 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import API_URL from '../config';
 
-const DEFAULT_CLASSROOMS = ['Main Hall', 'Lab 101', 'Room 201', 'Room 202', 'Lecture Hall A'];
+const TIME_SLOTS = [
+  { id: '1st', label: '1st', time: '8:40 AM - 9:35 AM' },
+  { id: '2nd', label: '2nd', time: '9:35 AM - 10:25 AM' },
+  { id: '3rd', label: '3rd', time: '10:25 AM - 11:15 AM' },
+  { id: 'TEA_BREAK', label: 'TEA BREAK', time: '11:15 AM - 11:35 AM', isBreak: true },
+  { id: '4th', label: '4th', time: '11:35 AM - 12:25 PM' },
+  { id: '5th', label: '5th', time: '12:25 PM - 1:15 PM' },
+  { id: 'LUNCH_BREAK', label: 'LUNCH BREAK', time: '1:15 PM - 2:00 PM', isBreak: true },
+  { id: 'ACTIVITY_HOUR', label: 'ACTIVITY HOUR', time: '2:00 PM - 2:30 PM', isBreak: true },
+  { id: '6th', label: '6th', time: '2:30 PM - 3:20 PM' },
+  { id: '7th', label: '7th', time: '3:20 PM - 4:10 PM' },
+];
+
+const parseTimeToMinutes = (timeStr) => {
+  if (!timeStr) return 0;
+  const str = timeStr.trim();
+  const matches = str.match(/(\d{1,2}):(\d{2})\s*(AM|PM)/i);
+  if (!matches) return 0;
+  let hours = parseInt(matches[1], 10);
+  const minutes = parseInt(matches[2], 10);
+  const modifier = matches[3].toUpperCase();
+
+  if (hours === 12) {
+    hours = modifier === 'AM' ? 0 : 12;
+  } else if (modifier === 'PM') {
+    hours += 12;
+  }
+  return (hours * 60) + minutes;
+};
 
 const AttendanceVerificationModal = ({ isOpen, onClose, onNext }) => {
-  const [classrooms, setClassrooms] = useState(DEFAULT_CLASSROOMS);
-  const [selectedClass, setSelectedClass] = useState('');
+  const [scheduleItems, setScheduleItems] = useState([]);
+  const [selectedSlotId, setSelectedSlotId] = useState('');
+  const [currentDay, setCurrentDay] = useState('');
 
   useEffect(() => {
     if (!isOpen) return;
-    const fetchClassrooms = async () => {
+    const fetchSchedule = async () => {
       try {
         const res = await axios.get(`${API_URL}/api/courses/student`);
-        if (res.data?.success && res.data?.courses?.length) {
+        if (res.data?.success && res.data?.courses) {
           const now = new Date();
           const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-          const currentDayStr = days[now.getDay()];
+          const todayStr = days[now.getDay()];
+          setCurrentDay(todayStr);
+
           const currentHour = now.getHours();
           const currentMinute = now.getMinutes();
           const currentTotalMinutes = currentHour * 60 + currentMinute;
 
-          const parseTimeToMinutes = (timeStr) => {
-            if (!timeStr) return 0;
-            const str = timeStr.trim();
-            if (str.includes('AM') || str.includes('PM')) {
-              // Capture explicit HH:MM formatted arrays with possible mixed spacing
-              const matches = str.match(/(\d{1,2}):(\d{2})\s*(AM|PM)/i);
-              if (!matches) return 0;
-              let hours = parseInt(matches[1], 10);
-              const minutes = parseInt(matches[2], 10);
-              const modifier = matches[3].toUpperCase();
+          const coursesForToday = res.data.courses.filter(c => c.day && c.day.toLowerCase() === todayStr.toLowerCase());
 
-              if (hours === 12) {
-                hours = modifier === 'AM' ? 0 : 12;
-              } else if (modifier === 'PM') {
-                hours += 12;
-              }
-              return (hours * 60) + minutes;
-            } else {
-              const [h, m] = str.split(':').map(Number);
-              return (h || 0) * 60 + (m || 0);
-            }
-          };
+          const builtSchedule = [];
+          
+          TIME_SLOTS.forEach(slot => {
+            if (slot.isBreak) return;
 
-          const coursesWithStatus = res.data.courses.map(c => {
-            if (!c.day || !c.startTime || !c.endTime) return { ...c, isActive: true };
+            const timeParts = slot.time.split('-');
+            const startTotal = parseTimeToMinutes(timeParts[0]);
+            const endTotal = parseTimeToMinutes(timeParts[1]);
+
+            // To support boundaries, we enforce strictly between start and end.
+            const isActiveTime = currentTotalMinutes >= startTotal && currentTotalMinutes <= endTotal;
+
+            const mappedCourse = coursesForToday.find(c => c.periods && c.periods.includes(slot.id));
+            if (!mappedCourse) return; // Skip if no course corresponds to this period today
             
-            // Validate Day
-            if (c.day.toLowerCase() !== currentDayStr.toLowerCase()) return { ...c, isActive: false };
+            const title = mappedCourse.title;
+            const isActive = isActiveTime;
             
-            const startTotal = parseTimeToMinutes(c.startTime);
-            const endTotal = parseTimeToMinutes(c.endTime);
-            
-            // Enforce bounds inclusively. Ensure endTotal is accurate or adjust if wraps overnight (edge case)
-            let finalEndTotal = endTotal;
-            if (endTotal < startTotal) {
-                finalEndTotal += 24 * 60; // Next day
-            }
-            
-            const isActive = currentTotalMinutes >= startTotal && currentTotalMinutes <= finalEndTotal;
-            return { ...c, isActive };
+            builtSchedule.push({
+              id: slot.id,
+              timeText: slot.time,
+              title: title,
+              isActive: isActive,
+              hasCourse: true,
+              displayStr: `${slot.id} - ${title} (${slot.time})`
+            });
           });
 
-          setClassrooms(coursesWithStatus);
+          setScheduleItems(builtSchedule);
           
-          const activeCourse = coursesWithStatus.find(c => c.isActive);
-          if (activeCourse) {
-            setSelectedClass(activeCourse.title || activeCourse);
+          const activeItem = builtSchedule.find(c => c.isActive);
+          if (activeItem) {
+            setSelectedSlotId(activeItem.id);
           } else {
-            setSelectedClass('');
-          }
-        } else {
-          // fallback if no courses assigned
-          const fallbackRes = await axios.get(`${API_URL}/api/classrooms`);
-          if (fallbackRes.data?.classrooms) {
-            const defaultRooms = fallbackRes.data.classrooms.map(title => ({ title, isActive: true }));
-            setClassrooms(defaultRooms);
-            setSelectedClass(defaultRooms[0]?.title || '');
+            setSelectedSlotId('');
           }
         }
-      } catch {
-        // keep default list if backend unavailable
+      } catch (err) {
+        console.error(err);
       }
     };
-    fetchClassrooms();
+    fetchSchedule();
   }, [isOpen]);
 
   const handleNext = () => {
-    if (!selectedClass) {
+    if (!selectedSlotId) {
       alert("Please select a currently active course from the dropdown.");
       return;
     }
 
-    const selectedCourseObj = classrooms.find(c => (c.title || c) === selectedClass);
-    if (selectedCourseObj && selectedCourseObj.isActive === false) {
+    const selectedItem = scheduleItems.find(c => c.id === selectedSlotId);
+    if (!selectedItem || !selectedItem.isActive) {
       alert("The selected course is not active at the moment.");
       return;
     }
 
     if (onNext) {
-      onNext(selectedClass);
+      onNext(selectedItem.title);
     }
-    setSelectedClass('');
+    setSelectedSlotId('');
   };
 
   const handleClose = () => {
-    setSelectedClass('');
+    setSelectedSlotId('');
     onClose();
   };
 
@@ -133,41 +144,25 @@ const AttendanceVerificationModal = ({ isOpen, onClose, onNext }) => {
         </div>
         <div className="attendance-modal-body">
           <label htmlFor="attendance-classroom" className="attendance-modal-label">
-            Select Course
+            Select Course ({currentDay})
           </label>
           <div className="attendance-modal-select-wrap">
             <select
               id="attendance-classroom"
               className="attendance-modal-select"
-              value={selectedClass}
-              onChange={(e) => setSelectedClass(e.target.value)}
+              value={selectedSlotId}
+              onChange={(e) => setSelectedSlotId(e.target.value)}
             >
-              <option value="">{classrooms.length > 0 ? "Choose current course..." : "No active course now"}</option>
-              {classrooms.map((c) => {
-                const formatTime = (timeStr) => {
-                  if (!timeStr) return '';
-                  if (timeStr.includes('AM') || timeStr.includes('PM')) return timeStr;
-                  const [hourString, minute] = timeStr.split(':');
-                  const hour = parseInt(hourString, 10);
-                  const ampm = hour >= 12 ? 'PM' : 'AM';
-                  const hour12 = hour % 12 || 12;
-                  const hourFormatted = String(hour12).padStart(2, '0');
-                  const minuteFormatted = minute.length === 1 ? `0${minute}` : minute;
-                  return `${hourFormatted}:${minuteFormatted} ${ampm}`;
-                };
-
-                const isActive = c.isActive !== false;
-                const displayStr = c.title && c.day && c.startTime && c.endTime 
-                  ? `${c.title} (${c.day}, ${formatTime(c.startTime)} - ${formatTime(c.endTime)}) ${!isActive ? '[Not Active Right Now]' : ''}`
-                  : (c.title || c);
-
+              <option value="">{scheduleItems.length > 0 ? "Choose current course..." : "No active course now"}</option>
+              {scheduleItems.map((c) => {
+                const isSelectable = c.isActive;
                 return (
                   <option 
-                    key={c._id || c.title || c} 
-                    value={c.title || c}
-                    disabled={!isActive}
+                    key={c.id} 
+                    value={c.id}
+                    disabled={!isSelectable}
                   >
-                    {displayStr}
+                    {c.displayStr} {!isSelectable ? '[Not Active Right Now]' : ''}
                   </option>
                 );
               })}
