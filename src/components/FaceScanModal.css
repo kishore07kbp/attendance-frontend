@@ -163,7 +163,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 4px; /* This sets the border thickness */
+  padding: 4px;
+  /* This sets the border thickness */
   box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.1);
 }
 
@@ -173,18 +174,16 @@
   position: absolute;
   width: 180%;
   height: 180%;
-  background: conic-gradient(
-    from 0deg,
-    transparent 0deg,
-    transparent 90deg,
-    #0043ff 120deg,
-    #0043ff 150deg,
-    transparent 180deg,
-    transparent 270deg,
-    #0043ff 300deg,
-    #0043ff 330deg,
-    transparent 360deg
-  );
+  background: conic-gradient(from 0deg,
+      transparent 0deg,
+      transparent 90deg,
+      #0043ff 120deg,
+      #0043ff 150deg,
+      transparent 180deg,
+      transparent 270deg,
+      #0043ff 300deg,
+      #0043ff 330deg,
+      transparent 360deg);
   /* Restored animation as requested: moves the blue border around the frame */
   animation: rotateBorder 4s linear infinite;
   z-index: 0;
@@ -194,7 +193,8 @@
 .face-scan-video-container::after {
   content: '';
   position: absolute;
-  inset: 4px; /* Matches padding */
+  inset: 4px;
+  /* Matches padding */
   background: #ffffff;
   border-radius: 12px;
   z-index: 1;
@@ -204,6 +204,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -250,7 +251,8 @@
   gap: 8px;
   border: 1px solid #334155;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  min-height: 40px; /* Prevent height flickering */
+  min-height: 40px;
+  /* Prevent height flickering */
   /* Animation removed to fulfill "not move" requirement */
 }
 

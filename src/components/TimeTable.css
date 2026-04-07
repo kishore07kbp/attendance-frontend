@@ -1,0 +1,138 @@
+.timetable-container {
+  width: 100%;
+  overflow-x: auto;
+  margin-top: 1.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border-radius: 0.5rem;
+  border: 1px solid #e2e8f0;
+}
+
+.timetable-wrapper {
+  min-width: 900px;
+}
+
+.timetable {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+.timetable th, .timetable td {
+  border: 1px solid #e2e8f0;
+  text-align: center;
+}
+
+.day-column {
+  width: 100px;
+  background-color: #f8fafc;
+  font-weight: 700;
+  color: #475569;
+  text-transform: uppercase;
+  padding: 1rem;
+}
+
+.period-header {
+  background-color: #f8fafc;
+  padding: 0.75rem 0.5rem;
+  min-width: 100px;
+}
+
+.period-id {
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 0.25rem;
+}
+
+.period-time {
+  font-size: 0.7rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.day-name {
+  background-color: #f8fafc;
+  font-weight: 600;
+  color: #334155;
+  padding: 1rem;
+}
+
+.period-cell {
+  height: 80px;
+  padding: 0.5rem;
+  vertical-align: top;
+}
+
+.break-header {
+  background-color: #f1f5f9;
+  width: 40px;
+  padding: 0.5rem;
+}
+
+.break-cell {
+  background-color: #f1f5f9;
+  padding: 0;
+  width: 40px;
+  position: relative;
+}
+
+.vertical-text {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  margin: 0 auto;
+}
+
+.course-entry {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.25rem;
+  background-color: #eff6ff;
+  border: 1px solid #bfdbfe;
+  color: #1e40af;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  position: relative;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.course-title-year {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.delete-course-btn {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 18px;
+  height: 18px;
+  background: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.course-entry:hover .delete-course-btn {
+  opacity: 1;
+}
+
+.course-entry:hover {
+  background-color: #dbeafe;
+}

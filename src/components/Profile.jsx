@@ -6,20 +6,7 @@ import { useAuth } from '../context/AuthContext';
 import FaceScanModal from './FaceScanModal';
 import BleRegisterModal from './BleRegisterModal';
 import API_URL from '../config';
-
-const formatTime = (timeStr) => {
-  if (!timeStr) return '';
-  if (timeStr.includes('AM') || timeStr.includes('PM')) {
-    return timeStr; // Already formatted AM/PM time
-  }
-  const [hourString, minute] = timeStr.split(':');
-  const hour = parseInt(hourString, 10);
-  const ampm = hour >= 12 ? 'PM' : 'AM';
-  const hour12 = hour % 12 || 12;
-  const hourFormatted = String(hour12).padStart(2, '0');
-  const minuteFormatted = minute.length === 1 ? `0${minute}` : minute;
-  return `${hourFormatted}:${minuteFormatted} ${ampm}`;
-};
+import TimeTable from './TimeTable';
 
 const Profile = ({ student, onUpdate }) => {
   const { user, fetchUser } = useAuth();
@@ -152,26 +139,11 @@ const Profile = ({ student, onUpdate }) => {
           </div>
 
           <div className="profile-card profile-card-personal">
-            <h2 className="profile-card-title">My Courses</h2>
+            <h2 className="profile-card-title">Time Table</h2>
             {courses.length === 0 ? (
               <p style={{ color: '#6b7280' }}>No courses have been assigned to your Class and Year yet.</p>
             ) : (
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '1rem', marginTop: '1rem' }}>
-                {courses.map(course => (
-                  <div key={course._id} style={{ padding: '0.9rem', border: '1px solid #e5e7eb', borderRadius: '0.5rem', background: '#f9fafb' }}>
-                    <h3 style={{ fontSize: '1rem', fontWeight: '600', color: '#111827', margin: '0 0 0.4rem 0' }}>{course.title}</h3>
-                    <p style={{ color: '#4b5563', margin: '0 0 0.2rem 0', fontSize: '0.85rem' }}>
-                      <span style={{ fontWeight: '500' }}>Faculty:</span> {course.facultyName}
-                    </p>
-                    <p style={{ color: '#4b5563', margin: 0, fontSize: '0.85rem' }}>
-                      <span style={{ fontWeight: '500' }}>Schedule:</span> {course.day}
-                    </p>
-                    <p style={{ color: '#6b7280', margin: '0.2rem 0 0 0', fontSize: '0.8rem', fontStyle: 'italic' }}>
-                      ({formatTime(course.startTime)} - {formatTime(course.endTime)})
-                    </p>
-                  </div>
-                ))}
-              </div>
+              <TimeTable courses={courses} />
             )}
           </div>
         </div>
