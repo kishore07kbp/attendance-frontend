@@ -7,6 +7,7 @@ import FaceRecognition from '../components/FaceRecognition';
 import AttendanceHistory from '../components/AttendanceHistory';
 import Profile from '../components/Profile';
 import DashboardHome from '../components/DashboardHome';
+import StudentTimeTable from '../components/StudentTimeTable';
 import './Dashboard.css';
 
 const getInitials = (name) => {
@@ -73,6 +74,13 @@ const StudentDashboard = () => {
             </svg>
             History
           </NavLink>
+          <NavLink to="/student/timetable" className="nav-item" title="Time Table">
+            <svg className="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+            Time Table
+          </NavLink>
           <NavLink to="/student/profile" className="nav-item" title="Profile">
             <svg className="nav-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M10 10C11.3807 10 12.5 8.88071 12.5 7.5C12.5 6.11929 11.3807 5 10 5C8.61929 5 7.5 6.11929 7.5 7.5C7.5 8.88071 8.61929 10 10 10Z" stroke="currentColor" strokeWidth="1.5"/>
@@ -105,6 +113,7 @@ const StudentDashboard = () => {
             <Route index element={<DashboardHome />} />
             <Route path="mark" element={<FaceRecognition student={student} onUpdate={fetchStudentProfile} />} />
             <Route path="history" element={<AttendanceHistory />} />
+            <Route path="timetable" element={<StudentTimeTable />} />
             <Route path="profile" element={<Profile student={student} onUpdate={fetchStudentProfile} />} />
           </Routes>
         </div>

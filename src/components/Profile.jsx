@@ -6,13 +6,11 @@ import { useAuth } from '../context/AuthContext';
 import FaceScanModal from './FaceScanModal';
 import BleRegisterModal from './BleRegisterModal';
 import API_URL from '../config';
-import TimeTable from './TimeTable';
 
 const Profile = ({ student, onUpdate }) => {
   const { user, fetchUser } = useAuth();
   const [faceScanModalOpen, setFaceScanModalOpen] = useState(false);
   const [bleScanModalOpen, setBleScanModalOpen] = useState(false);
-  const [courses, setCourses] = useState([]);
 
   const [isEditing, setIsEditing] = useState(false);
   const [editLoading, setEditLoading] = useState(false);
@@ -21,17 +19,6 @@ const Profile = ({ student, onUpdate }) => {
   const needsFaceRegistration = !student?.faceDescriptor || student.faceDescriptor.length === 0;
   const needsPermanentIdRegistration = !student?.permanentId || student.permanentId === '' || student.permanentId.startsWith('PENDING_');
 
-  useEffect(() => {
-    const fetchCourses = async () => {
-      try {
-        const response = await axios.get(`${API_URL}/api/courses/student`);
-        if (response.data.success) setCourses(response.data.courses);
-      } catch (err) {
-        console.error('Failed to fetch courses');
-      }
-    };
-    if (user && user.role === 'student') fetchCourses();
-  }, [user]);
 
   const startEditing = () => {
     setEditData({
@@ -136,15 +123,6 @@ const Profile = ({ student, onUpdate }) => {
                 </div>
               ))}
             </dl>
-          </div>
-
-          <div className="profile-card profile-card-personal">
-            <h2 className="profile-card-title">Time Table</h2>
-            {courses.length === 0 ? (
-              <p style={{ color: '#6b7280' }}>No courses have been assigned to your Class and Year yet.</p>
-            ) : (
-              <TimeTable courses={courses} />
-            )}
           </div>
         </div>
 
