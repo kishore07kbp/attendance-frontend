@@ -153,7 +153,7 @@ const ManageCourses = () => {
           </div>
           <div style={{ gridColumn: 'span 2' }}>
             <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '500', color: '#374151', marginBottom: '0.5rem' }}>Select Periods</label>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem', background: 'white', padding: '0.5rem', border: '1px solid #d1d5db', borderRadius: '0.375rem' }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem', background: 'white', padding: '0.5rem', border: '1px solid #d1d5db', borderRadius: '0.375rem', width: 'fit-content' }}>
               {PERIODS.map(p => (
                 <label key={p} style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.875rem', cursor: 'pointer' }}>
                   <input

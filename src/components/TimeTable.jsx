@@ -17,6 +17,11 @@ const TIME_SLOTS = [
 const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 const TimeTable = ({ courses, isAdmin = false, onDelete }) => {
+  const displayedTimeSlots = TIME_SLOTS.filter(slot => {
+    if (isAdmin && slot.id === 'ACTIVITY_HOUR') return false;
+    return true;
+  });
+
   // Organize courses by day and period for quick lookup
   const schedule = {};
   DAYS.forEach(day => {
@@ -49,9 +54,9 @@ const TimeTable = ({ courses, isAdmin = false, onDelete }) => {
           <thead>
             <tr>
               <th className="day-column">DAY</th>
-              {TIME_SLOTS.map(slot => (
+              {displayedTimeSlots.map(slot => (
                 <th key={slot.id} className={slot.isBreak ? 'break-header' : 'period-header'}>
-                  <div className="period-id">{slot.label}</div>
+                  {!slot.isBreak && <div className="period-id">{slot.label}</div>}
                   <div className="period-time">{slot.time}</div>
                 </th>
               ))}
@@ -61,14 +66,14 @@ const TimeTable = ({ courses, isAdmin = false, onDelete }) => {
             {DAYS.map(day => (
               <tr key={day}>
                 <td className="day-name">{day}</td>
-                {TIME_SLOTS.map(slot => {
+                {displayedTimeSlots.map(slot => {
                   if (slot.isBreak) {
                     // Check if it's the first day to show the vertical break label
                     // Actually per the image, it's a vertical text area
                     if (day === 'Monday') {
                       return (
                         <td key={slot.id} rowSpan={DAYS.length} className="break-cell">
-                          <div className="vertical-text">{slot.label}</div>
+                          <div className="vertical-text"><strong>{slot.label}</strong></div>
                         </td>
                       );
                     }

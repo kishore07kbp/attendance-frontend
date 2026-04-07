@@ -124,6 +124,85 @@ const Profile = ({ student, onUpdate }) => {
               ))}
             </dl>
           </div>
+          <div className="profile-card profile-card-app" style={{ 
+            background: 'linear-gradient(135deg, #1e293b 0%, #334155 100%)', 
+            border: 'none',
+            color: 'white',
+            position: 'relative',
+            overflow: 'hidden'
+          }}>
+            {/* Decorative background element */}
+            <div style={{ 
+              position: 'absolute', 
+              top: '-20px', 
+              right: '-20px', 
+              width: '100px', 
+              height: '100px', 
+              background: 'rgba(255, 255, 255, 0.05)', 
+              borderRadius: '50%' 
+            }}></div>
+
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', position: 'relative' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                <div style={{ background: 'rgba(255, 255, 255, 0.15)', padding: '0.45rem', borderRadius: '0.6rem' }}>
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="6" y="2" width="12" height="20" rx="3" stroke="white" strokeWidth="2"/>
+                    <path d="M11 5H13" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M12 18.5V19" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
+                <h2 className="profile-card-title" style={{ margin: 0, color: 'white', letterSpacing: '0.025em' }}>Bunk Tracer App</h2>
+              </div>
+                <div style={{ background: 'rgba(255, 255, 255, 0.1)', color: 'rgba(255, 255, 255, 0.8)', borderRadius: '1rem', border: '1px solid rgba(255, 255, 255, 0.1)', padding: '0.2rem 0.6rem', fontSize: '0.7rem' }}>v1.0.0</div>
+            </div>
+            
+            <div style={{ display: 'flex', gap: '2rem', alignItems: 'center', flexWrap: 'wrap' }}>
+              <div style={{ 
+                background: 'white', 
+                padding: '1rem', 
+                borderRadius: '1rem', 
+                boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.3)',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: '0.75rem'
+              }}>
+                <img 
+                  src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(window.location.origin + "/download")}`} 
+                  alt="Bunk Tracer Download" 
+                  style={{ width: '160px', height: '160px', display: 'block' }}
+                />
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                     <path d="M12 4V16M12 16L8 12M12 16L16 12M4 20H20" stroke="#475569" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                   </svg>
+                   <span style={{ fontSize: '0.75rem', color: '#475569', fontWeight: 600 }}>Scan to Install</span>
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem', flex: 1, minWidth: '200px' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                  <p style={{ fontSize: '1.05rem', color: '#f8fafc', fontWeight: 500, lineHeight: '1.4', margin: 0 }}>
+                    Mark attendance with one tap.
+                  </p>
+                  <p style={{ fontSize: '0.85rem', color: '#cbd5e1', lineHeight: '1.6', margin: 0 }}>
+                    Experience the fastest and most secure way to track your attendance using our new BLE-based mobile solution.
+                  </p>
+                </div>
+                
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginTop: '0.5rem' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', fontSize: '0.8rem', color: '#94a3b8' }}>
+                    <div style={{ width: '6px', height: '6px', background: '#10b981', borderRadius: '50%' }}></div>
+                    Real-time BLE verification
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', fontSize: '0.8rem', color: '#94a3b8' }}>
+                    <div style={{ width: '6px', height: '6px', background: '#10b981', borderRadius: '50%' }}></div>
+                    Secure proxy-proof marking
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', width: '100%' }}>
@@ -213,85 +292,6 @@ const Profile = ({ student, onUpdate }) => {
                 </button>
               </div>
             )}
-          </div>
-          <div className="profile-card profile-card-app" style={{ 
-            background: 'linear-gradient(135deg, #1e293b 0%, #334155 100%)', 
-            border: 'none',
-            color: 'white',
-            position: 'relative',
-            overflow: 'hidden'
-          }}>
-            {/* Decorative background element */}
-            <div style={{ 
-              position: 'absolute', 
-              top: '-20px', 
-              right: '-20px', 
-              width: '100px', 
-              height: '100px', 
-              background: 'rgba(255, 255, 255, 0.05)', 
-              borderRadius: '50%' 
-            }}></div>
-
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', position: 'relative' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-                <div style={{ background: 'rgba(255, 255, 255, 0.15)', padding: '0.45rem', borderRadius: '0.6rem' }}>
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="6" y="2" width="12" height="20" rx="3" stroke="white" strokeWidth="2"/>
-                    <path d="M11 5H13" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                    <path d="M12 18.5V19" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </div>
-                <h2 className="profile-card-title" style={{ margin: 0, color: 'white', letterSpacing: '0.025em' }}>Bunk Tracer App</h2>
-              </div>
-                <div style={{ background: 'rgba(255, 255, 255, 0.1)', color: 'rgba(255, 255, 255, 0.8)', borderRadius: '1rem', border: '1px solid rgba(255, 255, 255, 0.1)', padding: '0.2rem 0.6rem', fontSize: '0.7rem' }}>v1.0.0</div>
-            </div>
-            
-            <div style={{ display: 'flex', gap: '2rem', alignItems: 'center', flexWrap: 'wrap' }}>
-              <div style={{ 
-                background: 'white', 
-                padding: '1rem', 
-                borderRadius: '1rem', 
-                boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.3)',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                gap: '0.75rem'
-              }}>
-                <img 
-                  src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(window.location.origin + "/download")}`} 
-                  alt="Bunk Tracer Download" 
-                  style={{ width: '160px', height: '160px', display: 'block' }}
-                />
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                     <path d="M12 4V16M12 16L8 12M12 16L16 12M4 20H20" stroke="#475569" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                   </svg>
-                   <span style={{ fontSize: '0.75rem', color: '#475569', fontWeight: 600 }}>Scan to Install</span>
-                </div>
-              </div>
-
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem', flex: 1, minWidth: '200px' }}>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                  <p style={{ fontSize: '1.05rem', color: '#f8fafc', fontWeight: 500, lineHeight: '1.4', margin: 0 }}>
-                    Mark attendance with one tap.
-                  </p>
-                  <p style={{ fontSize: '0.85rem', color: '#cbd5e1', lineHeight: '1.6', margin: 0 }}>
-                    Experience the fastest and most secure way to track your attendance using our new BLE-based mobile solution.
-                  </p>
-                </div>
-                
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginTop: '0.5rem' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', fontSize: '0.8rem', color: '#94a3b8' }}>
-                    <div style={{ width: '6px', height: '6px', background: '#10b981', borderRadius: '50%' }}></div>
-                    Real-time BLE verification
-                  </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', fontSize: '0.8rem', color: '#94a3b8' }}>
-                    <div style={{ width: '6px', height: '6px', background: '#10b981', borderRadius: '50%' }}></div>
-                    Secure proxy-proof marking
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>
