@@ -57,7 +57,13 @@ const TimeTable = ({ courses, isAdmin = false, onDelete }) => {
               {displayedTimeSlots.map(slot => (
                 <th key={slot.id} className={slot.isBreak ? 'break-header' : 'period-header'}>
                   {!slot.isBreak && <div className="period-id">{slot.label}</div>}
-                  <div className="period-time">{slot.time}</div>
+                  <div className="period-time">
+                    {slot.isBreak ? (
+                      slot.time.split(' ').map((part, i) => <div key={i}>{part}</div>)
+                    ) : (
+                      slot.time
+                    )}
+                  </div>
                 </th>
               ))}
             </tr>

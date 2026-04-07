@@ -151,28 +151,30 @@ const ManageCourses = () => {
               {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'].map(d => <option key={d} value={d}>{d}</option>)}
             </select>
           </div>
-          <div style={{ gridColumn: 'span 2' }}>
-            <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '500', color: '#374151', marginBottom: '0.5rem' }}>Select Periods</label>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem', background: 'white', padding: '0.5rem', border: '1px solid #d1d5db', borderRadius: '0.375rem', width: 'fit-content' }}>
-              {PERIODS.map(p => (
-                <label key={p} style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.875rem', cursor: 'pointer' }}>
-                  <input
-                    type="checkbox"
-                    checked={formData.periods.includes(p)}
-                    onChange={() => handlePeriodChange(p)}
-                  />
-                  {p}
-                </label>
-              ))}
+          <div style={{ gridColumn: '1 / -1', display: 'flex', flexWrap: 'wrap', alignItems: 'flex-end', gap: '1rem' }}>
+            <div>
+              <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '500', color: '#374151', marginBottom: '0.5rem' }}>Select Periods</label>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem', background: 'white', padding: '0.5rem', border: '1px solid #d1d5db', borderRadius: '0.375rem', width: 'fit-content' }}>
+                {PERIODS.map(p => (
+                  <label key={p} style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.875rem', cursor: 'pointer' }}>
+                    <input
+                      type="checkbox"
+                      checked={formData.periods.includes(p)}
+                      onChange={() => handlePeriodChange(p)}
+                    />
+                    {p}
+                  </label>
+                ))}
+              </div>
             </div>
+            <button 
+              type="submit" 
+              disabled={submitting}
+              style={{ padding: '0.5rem 1rem', background: '#4f46e5', color: 'white', border: 'none', borderRadius: '0.375rem', fontWeight: '500', cursor: submitting ? 'not-allowed' : 'pointer' }}
+            >
+              {submitting ? 'Creating...' : 'Create Course'}
+            </button>
           </div>
-          <button 
-            type="submit" 
-            disabled={submitting}
-            style={{ padding: '0.5rem 1rem', background: '#4f46e5', color: 'white', border: 'none', borderRadius: '0.375rem', fontWeight: '500', cursor: submitting ? 'not-allowed' : 'pointer' }}
-          >
-            {submitting ? 'Creating...' : 'Create Course'}
-          </button>
         </form>
       </div>
 
