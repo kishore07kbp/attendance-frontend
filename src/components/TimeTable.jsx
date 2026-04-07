@@ -93,7 +93,7 @@ const TimeTable = ({ courses, isAdmin = false, onDelete }) => {
                       {periodCourses.map((course, idx) => (
                         <div key={`${course._id}-${idx}`} className="course-entry">
                           <div className="course-title-year">
-                            {isAdmin ? `${course.title} - ${course.year}` : `${course.title}`}
+                            {isAdmin ? `${course.title} - ${course.year} ${course.studentClass}` : `${course.title}`}
                           </div>
                           {isAdmin && (
                             <button 
